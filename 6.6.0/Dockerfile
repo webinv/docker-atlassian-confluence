@@ -30,20 +30,14 @@ RUN mkdir -p /opt/jdk/$ORACLE_JDK_VERSION && \
 ENV DOWNLOAD_URL        https://downloads.atlassian.com/software/confluence/downloads/atlassian-confluence-
 
 ENV CONFLUENCE_HOME /opt/atlassian/confluence/data
-RUN export CONFLUENCE_HOME=${CONFLUENCE_HOME}
 
 ENV JAVA_HOME /opt/jdk/${ORACLE_JDK_VERSION}
-RUN export JAVA_HOME=${JAVA_HOME}
-
 ENV JAVA_TRUSTSTORE ${JAVA_HOME}/jre/lib/security/cacerts
 ENV JAVA_TRUSTSTORE_PASSWORD changeit
 
 ENV CATALINA_OPTS "-Djavax.net.ssl.trustStore=${JAVA_TRUSTSTORE} -Djavax.net.ssl.trustStorePassword=${JAVA_TRUSTSTORE_PASSWORD}"
 
-# Install Atlassian Confluence to the following location
 ENV CONFLUENCE_INSTALL_DIR   /opt/atlassian/confluence
-RUN export CONFLUENCE_INSTALL_DIR=${CONFLUENCE_INSTALL_DIR}
-
 ENV CONFLUENCE_VERSION 6.6.0
 
 RUN mkdir -p                             ${CONFLUENCE_INSTALL_DIR} \
@@ -70,9 +64,6 @@ RUN \
     echo "confluence.home=${CONFLUENCE_HOME}" > ${CONFLUENCE_INSTALL_DIR}/confluence/WEB-INF/classes/confluence-init.properties
 
 ENV PATH $CONFLUENCE_INSTALL_DIR/bin:$JAVA_HOME/bin:$PATH
-RUN export PATH=${PATH}
-
-VOLUME ["${CONFLUENCE_INSTALL_DIR}"]
 
 # HTTP Port
 EXPOSE 8090
