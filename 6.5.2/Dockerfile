@@ -30,6 +30,10 @@ ENV RUN_USER_UID        5000
 ENV RUN_GROUP           atlassian
 ENV RUN_GROUP_GID       5000
 
+RUN \
+    groupadd --gid ${RUN_GROUP_GID} -r ${RUN_GROUP} && \
+    useradd -r --uid ${RUN_USER_UID} -g ${RUN_GROUP} ${RUN_USER}
+    
 ENV CONFLUENCE_VERSION 6.5.2
 ENV CONFLUENCE_HOME /var/atlassian/confluence/data
 ENV CONFLUENCE_INSTALL_DIR   /opt/atlassian/confluence

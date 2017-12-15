@@ -23,7 +23,7 @@ services:
     environment:
       TZ: ${TZ:-UTC}
     volumes:
-      - confluence-data:/opt/atlassian/confluence/data
+      - confluence-data:/var/atlassian/confluence/data
 volumes:
   postgres-data:
   confluence-data:
