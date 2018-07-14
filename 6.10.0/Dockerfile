@@ -44,7 +44,7 @@ RUN mkdir -p ${CONFLUENCE_HOME} ${CONFLUENCE_INSTALL_DIR} && \
     chown -R ${RUN_USER}:${RUN_GROUP} ${CONFLUENCE_HOME} ${CONFLUENCE_INSTALL_DIR}     
 
 # MySQL connector
-ENV MYSQL_CONNECTOR_VERSION 5.1.44
+ENV MYSQL_CONNECTOR_VERSION 8.0.11
 RUN \
     wget -O ${CONFLUENCE_INSTALL_DIR}/mysql-connector-java-${MYSQL_CONNECTOR_VERSION}.tar.gz http://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-java-${MYSQL_CONNECTOR_VERSION}.tar.gz && \
     tar xzf ${CONFLUENCE_INSTALL_DIR}/mysql-connector-java-${MYSQL_CONNECTOR_VERSION}.tar.gz -C ${CONFLUENCE_INSTALL_DIR} && \
