@@ -46,10 +46,10 @@ RUN mkdir -p ${CONFLUENCE_HOME} ${CONFLUENCE_INSTALL_DIR} && \
 # MySQL connector
 ENV MYSQL_CONNECTOR_VERSION 8.0.11
 RUN \
-    wget -O ${JIRA_INSTALL_DIR}/mysql-connector-java-${MYSQL_CONNECTOR_VERSION}.tar.gz http://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-java-${MYSQL_CONNECTOR_VERSION}.tar.gz && \
-    tar xzf ${JIRA_INSTALL_DIR}/mysql-connector-java-${MYSQL_CONNECTOR_VERSION}.tar.gz -C ${JIRA_INSTALL_DIR} && \
-    mv ${JIRA_INSTALL_DIR}/mysql-connector-java-${MYSQL_CONNECTOR_VERSION}/mysql-connector-java-${MYSQL_CONNECTOR_VERSION}.jar ${JIRA_INSTALL_DIR}/lib/ && \
-    rm -rf ${JIRA_INSTALL_DIR}/mysql-connector-java-${MYSQL_CONNECTOR_VERSION}.tar.gz ${JIRA_INSTALL_DIR}/mysql-connector-java-${MYSQL_CONNECTOR_VERSION}
+    wget -O ${CONFLUENCE_INSTALL_DIR}/mysql-connector-java-${MYSQL_CONNECTOR_VERSION}.tar.gz http://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-java-${MYSQL_CONNECTOR_VERSION}.tar.gz && \
+    tar xzf ${CONFLUENCE_INSTALL_DIR}/mysql-connector-java-${MYSQL_CONNECTOR_VERSION}.tar.gz -C ${CONFLUENCE_INSTALL_DIR} && \
+    mv ${CONFLUENCE_INSTALL_DIR}/mysql-connector-java-${MYSQL_CONNECTOR_VERSION}/mysql-connector-java-${MYSQL_CONNECTOR_VERSION}.jar ${CONFLUENCE_INSTALL_DIR}/lib/ && \
+    rm -rf ${CONFLUENCE_INSTALL_DIR}/mysql-connector-java-${MYSQL_CONNECTOR_VERSION}.tar.gz ${CONFLUENCE_INSTALL_DIR}/mysql-connector-java-${MYSQL_CONNECTOR_VERSION}
 
 # Confluence home dir
 RUN echo "confluence.home=${CONFLUENCE_HOME}" > ${CONFLUENCE_INSTALL_DIR}/confluence/WEB-INF/classes/confluence-init.properties
