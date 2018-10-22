@@ -11,7 +11,7 @@ export
 
 COMPOSE_FILE_ARGS ?= -f $(CURDIR)/docker-compose.yml
 
-DOCKER_COMPOSE = docker-compose $(COMPOSE_FILE_ARGS) -p $(PROJECT_NAME)
+DOCKER_COMPOSE = docker-compose $(COMPOSE_FILE_ARGS) 
 
 ifeq ($(shell uname -s),Darwin)
 XARGS_OPTS =
@@ -20,51 +20,46 @@ XARGS_OPTS = -r
 endif
 
 build:
-	$(COMPOSE_ENV) docker-compose $(COMPOSE_FILE_ARGS) -p $(PROJECT_NAME) build --no-cache confluence
+	$(DOCKER_COMPOSE) build confluence
 
 push: build
-	$(COMPOSE_ENV) docker-compose $(COMPOSE_FILE_ARGS) -p $(PROJECT_NAME) push confluence
+	$(DOCKER_COMPOSE) push confluence
 
-up: env-check
-	$(COMPOSE_ENV) docker-compose $(COMPOSE_FILE_ARGS) -p $(PROJECT_NAME) up $(UP_ARGS) ${SERVICE}
+up:
+	$(DOCKER_COMPOSE) up $(UP_ARGS) ${SERVICE}
 
-logs: env-check
-	$(COMPOSE_ENV) docker-compose $(COMPOSE_FILE_ARGS) -p $(PROJECT_NAME) logs --tail=100 -f
+logs:
+	$(DOCKER_COMPOSE) logs --tail=100 -f
 
-stop: env-check
-	$(COMPOSE_ENV) docker-compose $(COMPOSE_FILE_ARGS) -p $(PROJECT_NAME) stop ${SERVICE}
+stop:
+	$(DOCKER_COMPOSE) stop ${SERVICE}
 
 rm: stop
-	$(COMPOSE_ENV) docker-compose $(COMPOSE_FILE_ARGS) -p $(PROJECT_NAME) rm -f ${SERVICE}
+	$(DOCKER_COMPOSE) rm -f ${SERVICE}
 
-restart: env-check
-	$(COMPOSE_ENV) docker-compose $(COMPOSE_FILE_ARGS) -p $(PROJECT_NAME) restart $(SERVICE)
+restart:
+	$(DOCKER_COMPOSE) restart $(SERVICE)
 
-recreate: env-check
+recreate:
 	$(DOCKER_COMPOSE) up -d --force-recreate --build confluence
 
-down: env-check
-	$(COMPOSE_ENV) docker-compose $(COMPOSE_FILE_ARGS) -p $(PROJECT_NAME) down $(DOWN_ARGS)
+down:
+	$(DOCKER_COMPOSE) down $(DOWN_ARGS)
 
 exec: up
-	$(COMPOSE_ENV) docker-compose $(COMPOSE_FILE_ARGS) -p $(PROJECT_NAME) exec -T $(SERVICE) $(EXEC_ARGS)
+	$(DOCKER_COMPOSE) exec -T $(SERVICE) $(EXEC_ARGS)
 
 bash: up
-	$(COMPOSE_ENV) docker-compose $(COMPOSE_FILE_ARGS) -p $(PROJECT_NAME) exec $(SERVICE) bash
+	$(DOCKER_COMPOSE) exec $(SERVICE) bash
 
 confluence: up
-	$(COMPOSE_ENV) docker-compose $(COMPOSE_FILE_ARGS) -p $(PROJECT_NAME) exec confluence bash
+	$(DOCKER_COMPOSE) exec confluence bash
 
 psql: up
-	$(COMPOSE_ENV) docker-compose $(COMPOSE_FILE_ARGS) -p $(PROJECT_NAME) exec $(SERVICE) psql -U confluence
+	$(DOCKER_COMPOSE) exec $(SERVICE) psql -U confluence
 
 ps:
-	$(COMPOSE_ENV) docker-compose $(COMPOSE_FILE_ARGS) -p $(PROJECT_NAME) ps
-
-env-check:
-ifeq ($(shell uname -s),Darwin)
-	ifconfig lo0 | grep -qF '$(BIND_IP)' || sudo ifconfig lo0 alias $(BIND_IP)
-endif
+	$(DOCKER_COMPOSE) ps
 
 .PHONY: %
 .DEFAULT: run
