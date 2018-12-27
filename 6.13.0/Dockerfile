@@ -34,7 +34,7 @@ RUN \
     groupadd --gid ${RUN_GROUP_GID} -r ${RUN_GROUP} && \
     useradd -r --uid ${RUN_USER_UID} -g ${RUN_GROUP} ${RUN_USER}
     
-ENV CONFLUENCE_VERSION 6.12.2
+ENV CONFLUENCE_VERSION 6.13.0
 ENV CONFLUENCE_HOME /var/atlassian/confluence/data
 ENV CONFLUENCE_INSTALL_DIR   /opt/atlassian/confluence
 ENV DOWNLOAD_URL        https://downloads.atlassian.com/software/confluence/downloads/atlassian-confluence-
